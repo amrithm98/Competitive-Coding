@@ -18,7 +18,7 @@ int main()
     if(low*high<=len)
     {
         low=high;
-    }
+    }x
     vector<vector<char>> charMatrix(low,vector<char>(high));
     for(int i=0;i<high;i++)
     {

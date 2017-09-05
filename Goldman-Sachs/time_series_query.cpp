@@ -2,54 +2,21 @@
 
 using namespace std;
 
-void copy(long new_array[][2],long old_array[][2],long n)
-{
-    for(long i=0;i<n;i++)
-    {
-        new_array[i][0]=old_array[i][0];
-        new_array[i][1]=old_array[i][1];
-    }
-}
-
-long query_1(long arr[][2],long n,long v)
-{   
-    long val=0;
-    for(long i=0;i<n;i++)
-    {
-        if(arr[i][1]>=v)
-        {
-            val=arr[i][0];
-            break;
+long searchInsert(vector<long>& nums, long target) {
+        /// return index of first one that comp(item,target)==true, or nums.size() if not found
+		/// comp is greater or equal to for lower_bound
+		/// comp is greater for upper_bound
+        long first=0, last=nums.size(), mid;
+        while (first<last) {
+            mid=first+((last-first)>>1); // first<=mid, mid<last
+			/// if comp(item,target)==false, advance first
+			// if(nums[mid]<=target) // for upper_bound
+			if (nums[mid]<target) // for lower_bound
+				first=mid+1; // first always increases
+			else /// else recede last
+				last=mid; // last always decreases (even last-first==1)
         }
-    }
-    if(val==0)
-        return -1;
-    return val;
-}
-
-long query_2(long arr[][2],long n,long v)
-{
-    long val=0,pos=0,i,j;
-    for(i=0;i<n;i++)
-    {
-        if(arr[i][0]>=v)
-        {
-            break;
-        }
-    }
-    if(i==n)
-        return -1;
-    long max=0;
-    for(j=i;j<n;j++)
-    {
-        if(arr[j][1]>max)
-        {
-            max=arr[j][1];
-        }
-    }
-    if(max==0)
-        return -1;
-    return max;
+        return first;
 }
 
 int main() 
@@ -57,33 +24,60 @@ int main()
     long n;
     long q;
     cin >> n >> q;
-    long arr[n][2];
-
+    long arr[2][n];
+    vector<vector<long>> times(2,vector<long>(n));
     for(long t_i = 0; t_i < n; t_i++){
-        cin >> arr[t_i][0];
+        cin >> times[0][t_i];
     }
 
     for(long p_i = 0; p_i < n; p_i++){
-       cin >> arr[p_i][1];
+       cin >> times[1][p_i];
     }
 
-    long time_sorted[n][2];
-    copy(time_sorted,arr,n);
-    
     for(long a0 = 0; a0 < q; a0++){
         long _type;
         long v;
         long result;
         cin >> _type >> v;
+
         if(_type==1)
         {
-             result=query_1(time_sorted,n,v);
-             cout<<result<<endl;
+             long val=-1;
+            for(long i=0;i<n;i++)
+            {   
+                if(times[1][i]>=v)
+                {
+                    val=times[0][i];
+                    break;
+                }
+            }
+            if(val==-1)
+                cout<< -1<<endl;
+            else cout<<val<<endl;
         }
         else   
         {
-             result=query_2(time_sorted,n,v);
-             cout<<result<<endl;
+                long val=0,pos=0,i=0,j=0;
+                // i=(upper_bound(times[0].begin(),times[0].end(),v))-times[0].begin();
+                i=searchInsert(times[0],v);
+                // cout<<"I:"<<i<<"\n";
+                if(i>=n || i<0)
+                    cout<<-1<<endl;
+                else
+                {
+                    long max=-1;
+                    for(j=i;j<n;j++)
+                    {
+                        if(times[1][j]>max)
+                        {
+                            max=times[1][j];
+                        }
+                    }
+                    if(max==-1)
+                        cout<<-1<<endl;
+                    else
+                        cout<<max<<endl;
+                }
         }
     }
     return 0;
