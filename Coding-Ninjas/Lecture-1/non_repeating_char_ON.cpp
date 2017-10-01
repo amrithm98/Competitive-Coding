@@ -4,7 +4,7 @@
 using namespace std;
 
 
-char nonRepeatingCharacter(string str){
+char nonRepeatingCharacter_wrong(string str){
   
   //Write your code here
   unordered_map<char,int> mapVals;
