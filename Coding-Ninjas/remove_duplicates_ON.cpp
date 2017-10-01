@@ -30,7 +30,7 @@ int main()
     for(int i=0;i<n;i++)
         cin>>input[i];
     vector<int> output=removeDuplicates(input);
-    cout<<"\nOUTPIT";
+    cout<<"\nOUTPUT";
     for(int i=0;i<output.size();i++)
         cout<<output[i]<<"\n";
 }
