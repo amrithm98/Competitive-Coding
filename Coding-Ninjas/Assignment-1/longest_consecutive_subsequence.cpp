@@ -4,6 +4,14 @@
 #include<unordered_map>
 using namespace std;
 
+/***
+ * For each element in array
+ *      see if it has no element less than it with a difference of 1. i.e. a[i]-1 doesn't exist in the map
+ *      if a[i]-1 doesnt exist...increment a[i] till that element is not present in the map
+ *      keep two variables to store an a[i] and number of consecutive elements 
+ *      update n_elements and start_element whenever a longer consecutive sequence is seen
+ **/
+
 vector<int> longestSubsequence(int *arr, int n){
 	// Write your code here
     unordered_map<int,int> countMap;
