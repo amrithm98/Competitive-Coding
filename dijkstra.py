@@ -23,7 +23,7 @@ if __name__ == "__main__":
     edges = [
         ("2","3",6),("1","3",6)
     ]
-
+    
     print "=== Dijkstra ==="
     print edges
     print "A -> E:"
