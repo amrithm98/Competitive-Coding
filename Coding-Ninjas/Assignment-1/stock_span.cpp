@@ -48,7 +48,8 @@ using namespace std;
 
 // }
 
-int* stockSpan(int *price, int size) {
+int* stockSpan(int *price, int size) 
+{
     int *span=new int[size];
     span[0]=1;
     stack<int> priceStack;
