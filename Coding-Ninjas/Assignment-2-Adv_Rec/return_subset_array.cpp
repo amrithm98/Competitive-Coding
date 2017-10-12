@@ -25,7 +25,7 @@ int subset(int input[], int n, int output[][20]) {
 	{
 		int smallOutput=subset(input+1,n-1,output);
 		int i,j;
-
+		
 		for(i=0;i<smallOutput;i++)
 		{
 			output[smallOutput+i][0]=output[i][0]+1;
