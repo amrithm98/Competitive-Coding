@@ -11,12 +11,13 @@ void printAllPossibleCodes(string input,string output="") {
     char ch='a';
     for(int i=1;i<=26;i++,ch++)
         keyMap[to_string(i)]=ch;
-  
+    
     if(input=="")
     {
         cout<<output<<endl;
         return;
     }
+    
     printAllPossibleCodes(input.substr(1),output+keyMap[string(1,input[0])]);
     if(input.size()>1 && stoi(input.substr(0,2))<=26)
         printAllPossibleCodes(input.substr(2),output+keyMap[input.substr(0,2)]);

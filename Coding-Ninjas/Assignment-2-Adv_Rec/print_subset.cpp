@@ -11,7 +11,6 @@ void printSubsetsOfArray(int input[], int size,string output="") {
     {
         printSubsetsOfArray(input+1,size-1,output);
         printSubsetsOfArray(input+1,size-1,output+to_string(input[0])+" ");
-
     }
 }
 
