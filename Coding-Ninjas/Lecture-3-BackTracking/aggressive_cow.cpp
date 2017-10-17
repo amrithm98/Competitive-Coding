@@ -57,6 +57,7 @@ bool checkPlacable(vector<long long> xi,long long n,long long c,long long d)
 {
     long long count=1;
     long long currPlaced=xi[0];
+    
     for(long long i=1;i<n;i++)
     {
         if(xi[i]-currPlaced>=d)
