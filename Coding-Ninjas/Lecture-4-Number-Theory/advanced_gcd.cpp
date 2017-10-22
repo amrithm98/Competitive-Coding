@@ -39,14 +39,24 @@ int main()
 
         long long aModb = 0;
 
+        if(small == 0)
+        {
+          cout<<big<<endl;
+          continue;
+        }
+      
         for(int i = 0; i < big.size();i++)
         {
             aModb = ((10*aModb) + (int)(big[i]-'0'))%small;
         }
-
+      
+		if(aModb == 0)
+        {
+          cout<<small<<endl;
+          continue;
+        }
+      
         cout<<gcd(small,aModb)<<endl;
-    }
-    
-    
+    }	
     return 0;
 }
