@@ -36,6 +36,8 @@ vector<long> sieve_of_eratosthenes()
         for(int j = 1; primes[i]*j <= MAX ; j++ )
             divisorCount[ primes[i]*j ] ++;
     }
+    // for(int i = 0; i < 15; i++)
+    //     cout<<divisorCount[i]<<" ";
 
     return divisorCount;
 
