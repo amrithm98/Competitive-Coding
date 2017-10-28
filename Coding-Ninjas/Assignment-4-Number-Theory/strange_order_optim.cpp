@@ -45,7 +45,7 @@ int main()
             int x = i;
             while(x!=1)
             {
-                for(j = i - lpd[x]; j>= 1; j -= lpd[x])
+                for(j = i - lpd[x]; j >= 1; j -= lpd[x])
                 {
                     if(!marked[j])
                     {
@@ -62,7 +62,7 @@ int main()
             
             sort(gcdVals.begin(),gcdVals.end(),greater<int>());
             for(int k = 0; k <gcdVals.size(); k++)
-                cout<<gcdVals[k]<<" ";
+                cout << gcdVals[k] << " ";
         }
     }
 }
