@@ -14,25 +14,32 @@ int main()
         cin >> a0 >> a1 >> c >> n;
         if( n <= 1)
         {
-            cout<<"NO"<<endl;
+            if(n == 1 && a0 !=0)
+                cout<<"NO"<<endl;
+            else if(n == 1 && a0 ==0)
+                cout<<"YES"<<endl;
+            else if (n ==0)
+                cout<<"YES"<<endl;
             continue;
         }
-        string s = "";
-        s += to_string(a0);
-        s += to_string(a1);
+        long long aModb = 0;
+
+        aModb = a0;
+        aModb = (10*a0+a1)%41;
         for(int i = 2; i < n; i++)
         {
-            s += to_string(((s[i-1]-'0')*c+(s[i-2]-'0'))%10);
+            int a2 = ((a1*c) + (a0))%10;
+            aModb = (10*aModb + a2)%41;
+            a0 = a1;
+            a1 = a2;
         }
-        long long aModb = 0;
-        for(int i = 0; i < s.size(); i++)
-        {
-            aModb = ((10*aModb) + (int)(s[i]-'0'))%41;
-        }
+        
+
         if(aModb == 0)
             cout<<"YES";
         else 
             cout<<"NO";
+
         cout<<endl;
     }
     return 0;

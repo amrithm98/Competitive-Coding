@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include <map>
 using namespace std;
+
 map<string,int> dict;
 
 void wordbreak(string s,int n,string output)
