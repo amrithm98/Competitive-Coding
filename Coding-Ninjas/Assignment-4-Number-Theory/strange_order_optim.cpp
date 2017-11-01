@@ -10,7 +10,7 @@ vector<int> sieve_lpd(int n)
     vector<int> sieve(n+1);
     for(i = 2; i <= n ; i++)
         sieve[i] = i;
-
+        
     for(i = 2; i <= sqrt(n) ; i++)
     {
         for(j = 2*i; j <= n ;j += i)

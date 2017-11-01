@@ -22,7 +22,7 @@ int findMinCost(int i,int *battlemen,int n)
     battlemen[2] -= men[i];
 
     int smallOutput3 = max(smallOutput1,smallOutput2);
-    // int battles = accumulate(battlemen.begin(),battlemen.end(),0);
+    
     int battles = 0;
     for(int k = 0; k < 3 ; k++)
         battles += battlemen[k];
@@ -71,6 +71,7 @@ int findMinCost(int i,int *battlemen,int n)
 int minCost(int n)
 {
     int battleMen[3];
+
     for(int i = 0; i < 3; i++)
         battleMen[i] = 0;
     
