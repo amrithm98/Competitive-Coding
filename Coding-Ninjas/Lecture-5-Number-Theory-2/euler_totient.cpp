@@ -6,8 +6,8 @@ using namespace std;
 vector<int> etf_sieve(int n)
 {
     vector<int> sieve(n+1);
-    int i = 2;
-    for(i = 2; i <= n ; i++)
+    int i = 1;
+    for(i = 1; i <= n ; i++)
     {
         sieve[i] = i;
     }
@@ -31,7 +31,7 @@ int main()
     cout<<"\nEnter N: ";
     cin >> n; 
     vector<int> sieve = etf_sieve(n);
-    for(int i = 2; i <= n ; i++)
+    for(int i = 1; i <= n ; i++)
         cout<< i<<" "<<sieve[i]<<endl;
 
 }
