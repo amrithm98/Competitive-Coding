@@ -31,7 +31,7 @@ void printPrimes(long long l,long long r,vector<int> primes)
     bool isPrime[r-l+1];
     for(int i = 0; i <= r-l ; i++)
         isPrime[i] = true;
-
+    
     for(int i = 0; (long long)primes[i]*primes[i] <= r; i++)
     {
         int currPrime = primes[i];
