@@ -5,20 +5,14 @@ long long max_coins(long long *input,int n)
 {
     long long *output = new long long[n];
     output[0] = input[0];
-    for(int i = 1; i < n; i++)
+    output[1] = max(input[0],input[1]);
+    for(int i = 2; i < n; i++)
     {
-        output[i] = input[i];
-        long long possAns = 0;
-        for(int j = i-2; j >= 0; j--)
-        {   
-            if(input[j] > possAns)
-                possAns = input[j];
-        }
-        output[i] += possAns;
+        //Exclude ith element(then output[i] = output[i-1])
+        //or include ith element(then we can't include i-1th element)
+        output[i] = max(output[i-1],output[i-2] + input[i]);
     }
-    for(int i = 0; i < n; i++)
-        cout<<output[i]<<" ";
-    return 1;
+    return output[n-1];
 }
 
 int main()
