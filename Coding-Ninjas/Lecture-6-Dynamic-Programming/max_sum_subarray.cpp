@@ -31,6 +31,7 @@ long kadanes(long *arr,int n,bool allNeg)
     }
     return best_max;
 }
+
 int main()
 {
     int n;
