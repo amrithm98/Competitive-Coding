@@ -4,7 +4,7 @@ using namespace std;
 int modRecursive_Iterative(int a, int b, int c)
 {
     int ans = 1;
-    while(b!=0)
+    while(b != 0)
     {
         // And with 1
         if(b&1)

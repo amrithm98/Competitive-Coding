@@ -18,7 +18,7 @@ vector<long> cubeDivisors()
         }
 
     }
-
+    
     for(long i = 1; i <= MAX; i++)
     {
         cubesUptoN[i] = cubesUptoN[i-1] + cubeDivisor[i];
