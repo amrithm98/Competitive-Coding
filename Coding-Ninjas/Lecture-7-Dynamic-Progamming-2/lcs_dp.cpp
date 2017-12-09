@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int lcs(char *c1,char *c2)
+int lcs_naive(char *c1,char *c2)
 {
     if(c1[0] == '\0' || c2[0] == '\0')
     {
