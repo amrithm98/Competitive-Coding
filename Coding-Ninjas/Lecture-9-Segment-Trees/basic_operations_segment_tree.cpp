@@ -1,6 +1,80 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+void rangeUpdateLazy(int *arr,int *tree,int *lazy,int start,int end,int inc,int low,int high,int pos)
+{
+    if(low > high)
+    {
+        return;
+    }
+    if(lazy[pos] != 0)
+    {
+        tree[pos] += lazy[pos];
+        if(low != high)
+        {
+            lazy[2*pos] += lazy[pos];
+            lazy[2*pos+1] += lazy[pos];
+        }
+        lazy[pos] = 0;
+
+    }
+    //No Overlap
+    if(start > high || end < low)
+    {
+        return;
+    }
+    //Total Overlap
+    if(start <= low && end >= high)
+    {
+        tree[pos] += inc;
+        if(low != high)
+        {
+            lazy[2*pos] += inc;
+            lazy[2*pos+1] += inc;
+        }
+        return;
+    }
+    //Partial Overlap
+    int mid = (low+high)/2;
+    rangeUpdateLazy(arr,tree,lazy,start,end,inc,low,mid,2*pos);
+    rangeUpdateLazy(arr,tree,lazy,start,end,inc,mid+1,high,2*pos+1);
+    tree[pos] = tree[2*pos] + tree[2*pos+1];
+
+}
+
+int queryLazy(int *arr,int *tree,int *lazy,int start,int end,int low,int high,int pos)
+{
+    if(low > high)
+    {
+        return 0;
+    }
+    if(lazy[pos] != 0)
+    {
+        tree[pos] += lazy[pos];
+        if(low != high)
+        {
+            lazy[2*pos] += lazy[pos];
+            lazy[2*pos+1] += lazy[pos];
+
+        }
+        lazy[pos] = 0;
+    }
+    //No Overlap
+    if(start > high || end < low)
+    {
+        return 0;
+    }
+    //Total Overlap
+    if(start <= low && end >= high)
+    {
+        return tree[pos];
+    }
+    //Partial Overlap
+    int mid = (low + high)/2;
+    return queryLazy(arr,tree,lazy,start,end,low,mid,2*pos)+queryLazy(arr,tree,lazy,start,end,mid+1,high,2*pos+1);
+
+}
+
 void buildTree(int *arr,int *tree,int start,int end,int treeNode)
 {
     if(start == end)
@@ -56,6 +130,13 @@ int query(int *arr,int *tree,int start,int end,int treeNode,int left,int right)
 
 }
 
+void printTree(int *tree,int n)
+{
+    for(int i = 1; i < 2*n; i++)
+        cout<<tree[i]<<" ";
+    cout<<"\n";
+}
+
 int main()
 {
     int n;
@@ -63,6 +144,8 @@ int main()
 
     int *arr = new int[n];
     int *tree = new int[2*n];
+    int *lazy = new int[2*n];
+    memset(lazy,0,2*n);
 
     for(int i = 0; i < n; i++)
         cin >> arr[i];
@@ -75,13 +158,13 @@ int main()
     
     while(1)
     {
-        cout<<"\n1. Update\n2.Query\nEnter Choice: ";
+        cout<<"\n1. Update\n2.Query\nLAZY\n=======\n3. Range Update\n4. Range Query\nEnter Choice: ";
         int ch;
         cin >> ch;
+        int a,b,c,i,v,res;
         switch(ch)
         {
             case 1:
-                int i,v;
                 cout<<"\nEnter Index & Value to Update: ";
                 cin >> i >> v;
                 updateTree(arr,tree,0,n-1,1,i,v);
@@ -89,13 +172,24 @@ int main()
                     cout<<tree[i]<<" ";
                 break;
             case 2:
-                int a,b;
                 cout<<"\nEnter Range To Query: ";
                 cin >> a >> b;
-                int res = query(arr,tree,0,n-1,1,a,b);
+                res = query(arr,tree,0,n-1,1,a,b);
+                cout<<"\nResult: "<<res<<endl;
+                break;
+            case 3:
+                cout<<"\nEnter Range To Query & Value: ";
+                cin >> a >> b >> c;
+                rangeUpdateLazy(arr,tree,lazy,a,b,c,0,n-1,1);
+                break;
+            case 4:
+                cout<<"\nEnter Range To Query: ";
+                cin >> a >> b;
+                res = queryLazy(arr,tree,lazy,a,b,0,n-1,1);
                 cout<<"\nResult: "<<res<<endl;
                 break;
         }
+        printTree(tree,n);
     }
     
 
