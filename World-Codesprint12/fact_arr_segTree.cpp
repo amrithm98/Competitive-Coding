@@ -35,10 +35,10 @@ void buildTree(long *arr,long *tree,long start,long end,long treeNode)
 
     long mid = (start+end)/2;
 
-    buildTree(arr,tree,start,mid,2*treeNode);
-    buildTree(arr,tree,mid+1,end,2*treeNode+1);
+    buildTree(arr,tree,start,mid,2*treeNode+1);
+    buildTree(arr,tree,mid+1,end,2*treeNode+2);
 
-    tree[treeNode] = tree[2*treeNode] + tree[2*treeNode+1];
+    tree[treeNode] = tree[2*treeNode+1] + tree[2*treeNode+2];
 }
 
 void updateTree(long *arr,long *tree,long start,long end,long treeNode,long idx)
@@ -52,13 +52,13 @@ void updateTree(long *arr,long *tree,long start,long end,long treeNode,long idx)
     long mid = (start + end)/2;
     if(idx > mid)
     {
-        updateTree(arr,tree,mid+1,end,2*treeNode+1,idx);
+        updateTree(arr,tree,mid+1,end,2*treeNode+2,idx);
     }
     else
     {
-        updateTree(arr,tree,start,mid,2*treeNode,idx);
+        updateTree(arr,tree,start,mid,2*treeNode+1,idx);
     }
-    tree[treeNode] = tree[2*treeNode] + tree[2*treeNode+1];
+    tree[treeNode] = tree[2*treeNode+1] + tree[2*treeNode+2];
     return ;
 }
 
@@ -74,13 +74,13 @@ void updateTreeValue(long *arr,long *tree,long start,long end,long treeNode,long
 
     if(idx > mid)
     {
-        updateTreeValue(arr,tree,mid+1,end,2*treeNode+1,idx,value);
+        updateTreeValue(arr,tree,mid+1,end,2*treeNode+2,idx,value);
     }
     else
     {
-        updateTreeValue(arr,tree,start,mid,2*treeNode,idx,value);
+        updateTreeValue(arr,tree,start,mid,2*treeNode+1,idx,value);
     }
-    tree[treeNode] = tree[2*treeNode]+ tree[2*treeNode+1];
+    tree[treeNode] = tree[2*treeNode+1]+ tree[2*treeNode+2];
     return;
     // cout<<"\nUPDATING VALUE";
 }
@@ -98,8 +98,8 @@ long query(long *arr,long *tree,long start,long end,long treeNode,long left,long
     }
 
     long mid = (start+end)/2;
-    long ans1 = query(arr,tree,start,mid,2*treeNode,left,right);
-    long ans2 = query(arr,tree,mid+1,end,2*treeNode+1,left,right);
+    long ans1 = query(arr,tree,start,mid,2*treeNode+1,left,right);
+    long ans2 = query(arr,tree,mid+1,end,2*treeNode+2,left,right);
     return ((ans1%MOD)+(ans2%MOD))%MOD;
 }
 
@@ -125,7 +125,7 @@ int main()
     for(long i = 0; i < n; i++)
         cin >> arr[i];
 
-    buildTree(arr,tree,0,n-1,1);
+    buildTree(arr,tree,0,n-1,0);
     // printTree(tree,n);
     for(int i = 0; i < m; i++)
     {
@@ -136,16 +136,16 @@ int main()
         if(a == 1)
         {
             for(int k = b; k <= c; k++)
-                    updateTree(arr,tree,0,n-1,1,k);
+                    updateTree(arr,tree,0,n-1,0,k);
         }
         else if (a == 2)
         {
-                long ans = query(arr,tree,0,n-1,1,b,c);
+                long ans = query(arr,tree,0,n-1,0,b,c);
                 cout<<ans<<endl;
         }
         else 
         {
-                updateTreeValue(arr,tree,0,n-1,1,b,c+1);
+                updateTreeValue(arr,tree,0,n-1,0,b,c+1);
         }
     }
     return 0;
