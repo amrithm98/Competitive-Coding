@@ -6,71 +6,59 @@ int main()
     int n,k,x;
     cin >> n >> k >> x;
 
-    int *arr = new int[1001];
-    for(int i = 0; i < n; i++)
+    int **dp = new int*[2];
+    for(int i = 0; i < 2; i++)
+        dp[i] = new int[1024];
+    
+    for(int i = 0;i < n; i++)
     {
-        int a;
-        cin >> a;
-        arr[a]++;
+        int v;
+        cin >> v;
+        dp[0][v]++;
     }
-    int *dp = new int[1001];
 
-    int traversed_count = 0;
-    int max = 0;
-    int min = INT8_MAX;
+    int traversed_count;
+    int flag = 0;
 
-    for(int i = 0; i <= 1000; i++)
-        dp[i] = arr[i];
-
-    for(int j = 0; j < k; j++)
+    for(int i = 0; i < k; i++)
     {
-        for(int i = 0; i <= 1000; i++)
+        traversed_count = 1;
+        for(int j = 0; j <= 1023; j++)
         {
-            if(arr[i] != 0)
+            if(dp[flag][j] != 0)
             {
-                if(traversed_count % 2 == 0)
+                if(traversed_count % 2 == 1 && dp[flag][j] % 2 == 1)
                 {
-                    int change = (arr[i]+1)/2;
-                    dp[i^x] += change;
-                    dp[i] = (arr[i] - change);
+                    dp[flag^1][j^x] += dp[flag][j]/2 + 1;
+                    dp[flag^1][j] += ( dp[flag][j] - (dp[flag][j]/2 + 1) );
                 }
-
                 else
                 {
-                    int change = (arr[i]/2);
-                    dp[i^x] += change;
-                    dp[i] = (arr[i] - change);
+                    dp[flag^1][j^x] += dp[flag][j]/2;
+                    dp[flag^1][j] += ( dp[flag][j] - (dp[flag][j]/2) );
                 }
-                traversed_count += arr[i];
-                // cout<<i<<" "<<dp[i]<<" "<<(i^x)<<" "<<dp[i^x]<<endl;
+
+                traversed_count += dp[flag][j];
+                dp[flag][j] = 0;
             }
         }
-
-        for(int i = 0; i <= 1000; i++)
-            arr[i] = dp[i];
-
-        memset(dp,0,sizeof(dp));
-
-        traversed_count = 0;
+        flag = flag^1;
     }
-    for(int i = 0; i <= 1000; i++)
+
+    int max_val = 0;
+    int min_val = 1023;
+
+    for(int i = 0; i <= 1023; i++)
     {
-        if(arr[i] != 0)
+        if(dp[flag][i] != 0)
         {
-            min = i;
-            break;
+            if(i > max_val)
+                max_val = i;
+            if(i < min_val)
+                min_val = i;
         }
     }
 
-    for(int i = 1000; i >= 0; i--)
-    {
-        if(arr[i] != 0)
-        {
-            max = i;
-            break;
-        }
-    }
-
-    cout<<max<<" "<<min<<endl;
+    cout<<max_val<<" "<<min_val<<endl;
     return 0;
 }
