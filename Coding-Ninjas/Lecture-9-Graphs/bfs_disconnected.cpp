@@ -30,6 +30,22 @@ void BFS(int **graph,int n,int sv,int *visited)
     }
 }
 
+void bfs_disconnected(int **graph,int n)
+{
+    int *visited = new int[n];
+    memset(visited,0,sizeof(visited));
+
+    for(int i = 0; i < n; i++)
+    {
+        if(!visited[i])
+        {
+            BFS(graph,n,i,visited);
+        }
+    }
+
+    delete [] visited;
+}
+
 
 int main() {
     int n,e;
@@ -51,11 +67,7 @@ int main() {
         graph[s][f] = 1;
     }
 
-    int *visited = new int[n];
-    for(int i = 0; i < n; i++)
-        visited[i] = 0;
-
-    BFS(graph,n,0,visited);
+    bfs_disconnected(graph,n);
 
     return 0;
 }

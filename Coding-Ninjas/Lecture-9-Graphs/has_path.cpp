@@ -1,17 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void BFS(int **graph,int n,int sv,int *visited)
+bool BFS(int **graph,int n,int *visited,int sv,int ev)
 {
     queue<int> que;
     que.push(sv);
     visited[sv] = 1;
 
+    bool found = false;
+
     while(!que.empty())
     {
         int v = que.front();
         que.pop();
-        cout<<v<<" ";
+        if(v == ev)
+        {
+            found = true;
+            break;
+        }
 
         for(int i = 0; i < n; i++)
         {
@@ -28,6 +34,8 @@ void BFS(int **graph,int n,int sv,int *visited)
 
         }
     }
+
+    return found;
 }
 
 
@@ -51,11 +59,20 @@ int main() {
         graph[s][f] = 1;
     }
 
+    int start,end;
+    cin >> start >> end; 
+
     int *visited = new int[n];
     for(int i = 0; i < n; i++)
         visited[i] = 0;
 
-    BFS(graph,n,0,visited);
+    bool sol = BFS(graph,n,visited,start,end);
+    if(sol)
+        cout<<"true";
+    else    
+        cout<<"false";
+
+    cout<<endl;
 
     return 0;
 }
