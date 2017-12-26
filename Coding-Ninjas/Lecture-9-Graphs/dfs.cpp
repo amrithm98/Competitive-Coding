@@ -5,6 +5,7 @@ void DFS(int **graph,int n,int sv,int *visited)
 {
     cout<<sv<<endl;
     visited[sv] = true;
+    
     for(int i = 0; i < n; i++)
     {
         if(i == sv)
