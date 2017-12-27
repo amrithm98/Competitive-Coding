@@ -1,6 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+/****
+ *  In the Fenwick Tree of size 10^6, we are going to store sum of numbers less that each index.
+ *  Say in BIT[2^10] , it will store the number of elements of value <= 1024 
+ *  Here we sort the pair with x first and then see how many elements are in the BIT which is below y
+ *  This answer is the coder rating
+ *  PS: Special Care has to taken in checking elements with equal x & y
+ ****/ 
+
 int BIT[100001];
 
 struct coder
