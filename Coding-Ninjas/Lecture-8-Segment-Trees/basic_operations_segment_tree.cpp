@@ -99,6 +99,7 @@ void updateTree(int *arr,int *tree,int start,int end,int treeNode,int idx,int va
         tree[treeNode] = value;
         return;
     }
+    
     int mid = (start + end)/2;
     if(idx > mid)
     {

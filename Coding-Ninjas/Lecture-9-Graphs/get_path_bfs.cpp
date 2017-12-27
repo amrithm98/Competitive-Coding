@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void BFS(int **graph,int n,int *visited,int sv,int ev)
+void getBFSPath(int **graph,int n,int *visited,int sv,int ev)
 {
     map<int,int> reachMap;
     queue<int> que;
@@ -41,7 +41,7 @@ void BFS(int **graph,int n,int *visited,int sv,int ev)
     // {
     //     cout<<it.first<<" "<<it.second<<endl;
     // }
-    
+
     if(found)
     {
         int v = ev;
@@ -86,7 +86,7 @@ int main() {
     
     else
     {
-        BFS(graph,n,visited,start,end);
+        getBFSPath(graph,n,visited,start,end);
     }
 
     return 0;
