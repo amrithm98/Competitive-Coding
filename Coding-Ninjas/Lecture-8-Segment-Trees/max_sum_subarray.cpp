@@ -39,7 +39,7 @@ node query(int *arr,node *tree,int start,int end,int treeNode,int left,int right
 {
     if(start > right || end < left)
     {
-        node zero = {0,0,0,0};
+        node zero = {-100000,-100000,-100000,-100000};
         return zero;
     }
     if(start >= left && end <= right)
