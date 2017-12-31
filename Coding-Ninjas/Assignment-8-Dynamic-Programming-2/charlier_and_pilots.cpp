@@ -1,8 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+int dp[10001][5001];
 
-long long int minPilotCost(int *capt,int *asst,int n,int x,long long int **dp)
+long long int minPilotCost(int *capt,int *asst,int n,int x)
 {
     if(dp[n][x] != -1)
     {
@@ -16,18 +17,18 @@ long long int minPilotCost(int *capt,int *asst,int n,int x,long long int **dp)
     if(x == 0)
     {
         // cout<<"\nASST: "<<asst[0];
-        dp[n][x] = asst[0] + minPilotCost(capt+1,asst+1,n-1,x+1,dp);
+        dp[n][x] = asst[0] + minPilotCost(capt+1,asst+1,n-1,x+1);
     }
     else if(x == n)
     {
         // cout<<"\nCAPT: "<<capt[0];
 
-        dp[n][x] = capt[0] + minPilotCost(capt+1,asst+1,n-1,x-1,dp);
+        dp[n][x] = capt[0] + minPilotCost(capt+1,asst+1,n-1,x-1);
     }
     else
     {
-        long long int cost1 = asst[0] + minPilotCost(capt+1,asst+1,n-1,x+1,dp);
-        long long int cost2 = capt[0] + minPilotCost(capt+1,asst+1,n-1,x-1,dp);
+        long long int cost1 = asst[0] + minPilotCost(capt+1,asst+1,n-1,x+1);
+        long long int cost2 = capt[0] + minPilotCost(capt+1,asst+1,n-1,x-1);
 
         dp[n][x] = min(cost1,cost2);
     }
@@ -48,17 +49,15 @@ int main()
         cin >> capt[i] >> asst[i];
     }
 
-    long long int **dp = new long long int*[n+1];
 
     for(int i = 0; i <= n; i++)
     {
-        dp[i] = new long long int[n+1];
-
-        for(int j = 0; j <= n; j++)
+        //Be cautious about the limits
+        for(int j = 0; j <= n/2; j++)
             dp[i][j] = -1;
     }
 
-    long long int minCost = minPilotCost(capt,asst,n,0,dp);
+    long long int minCost = minPilotCost(capt,asst,n,0);
 
     cout<<minCost<<endl;
 
