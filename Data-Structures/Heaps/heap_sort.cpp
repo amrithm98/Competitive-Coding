@@ -44,6 +44,20 @@ void printHeap(int *arr,int n)
         cout << arr[i] << " ";
 }
 
+void heapSort(int *arr,int n)
+{
+    int heap_size = n;
+    for(int i = n; i >= 2; i--)
+    {
+        swap(arr[1],arr[i]);
+        heap_size--;
+        max_heapify(arr,1,heap_size);
+    }
+
+    cout<<"\nSorted Array: ";
+    printHeap(arr,n);
+}
+
 int main()
 {
     int n;
@@ -60,6 +74,8 @@ int main()
     buildMaxHeap(arr,n);
 
     printHeap(arr,n);
+
+    heapSort(arr,n);
 
 
 }
