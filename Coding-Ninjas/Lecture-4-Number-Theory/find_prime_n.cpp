@@ -16,7 +16,7 @@ int main()
 
     for(int i = 2;i <= n;i++)
         sieve[i] = true;
-
+    
     for(int i = 2; i <= sqrt(n); i++)
     {
         if(sieve[i])

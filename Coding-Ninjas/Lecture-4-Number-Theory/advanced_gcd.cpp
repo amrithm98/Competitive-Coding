@@ -14,6 +14,7 @@ ll gcd(long long a,long long b)
         return gcd(b,a%b);
 
 }
+
 int main()
 {
     int t;

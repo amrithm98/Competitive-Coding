@@ -15,6 +15,7 @@ void knapsack_optim(int *fee,int *fun,int n,int budget)
     dp[1][0] = 0;
     bool k = 1;
     int w;
+
     for(int i = 1; i <= n ; i++ , k=!k)
     {
         w = 0;
@@ -30,6 +31,7 @@ void knapsack_optim(int *fee,int *fun,int n,int budget)
     }
     int exhausted_bud = 0;
     int ans = dp[!k][budget];
+
     for(int i = 0; i <= budget; i++)
     {
         if(dp[!k][i] == ans)
@@ -41,6 +43,7 @@ void knapsack_optim(int *fee,int *fun,int n,int budget)
     
     if(exhausted_bud == 0)
         exhausted_bud = 1;
+        
     cout<<exhausted_bud<<" "<<ans<<endl;
     
     delete [] dp[0];

@@ -56,12 +56,12 @@ int maxSumRectangle(int **rectangle,int n,int m)
     for(i = 0; i < m ; i++)
     {
         memset(temp,0,sizeof(temp));
-
+        
         for(j = i; j < m; j++)
         {
             for(int k = 0; k < n ; k++)
                 temp[k] += rectangle[k][j];   //Row Sum For Column(s) 
-
+            
             /****
              * For Col 1,Col 1 + Col 2,Col 1+ Col 2 + Col 3
              *      Find Apt Top and Bottom Using Kadane's algo such that sum is maximum

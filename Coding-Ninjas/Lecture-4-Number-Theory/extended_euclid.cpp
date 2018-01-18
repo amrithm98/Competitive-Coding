@@ -27,6 +27,7 @@ Triplet extendedEuclid(int a,int b)
 
     return answer;
 }
+
 void multiplicativeModuloInverse(int a,int m)
 {
     Triplet mmi = extendedEuclid(a,m);

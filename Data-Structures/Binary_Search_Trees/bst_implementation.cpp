@@ -136,7 +136,6 @@ node* deleteNode(node *root,int value)
             node* successor = inOrderSuccessor(root->right);
             root->data = successor->data;
             root->right = deleteNode(root->right,successor->data);
-            
         }
     }
     return root;
