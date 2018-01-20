@@ -16,8 +16,8 @@ vector<int> removeDuplicates(vector<int> input){
       {
           result.push_back(input[i]);
           visited[input[i]]=1;
-      }
-  }
+      } 
+  } 
   return result;
 }
 
