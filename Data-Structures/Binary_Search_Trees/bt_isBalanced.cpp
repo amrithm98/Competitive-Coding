@@ -53,7 +53,7 @@ bool isBalanced(node *root,int *height)
         return 1;
     }
     l = isBalanced(root->left,&lh);
-    r = isBalanced(root->right,&rh);
+    r = isBalanced(roo->tright,&rh);
 
     *height = max(lh,rh) + 1;
 
