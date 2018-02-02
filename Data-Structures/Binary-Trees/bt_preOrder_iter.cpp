@@ -47,34 +47,22 @@ void insert(Node *root,int val)
     }
 }
 
-void reverseLevelOrder(Node *root)
+void preOrderIter(Node *root)
 {
-    queue<Node*> q;
     stack<Node *> st;
-    q.push(root);
-
-    while(!q.empty())
-    {
-        Node *n = q.front();
-        q.pop();
-
-
-        st.push(n);
-        
-        //Push right first..then left to maintain order in stack
-
-        if(n->right)
-            q.push(n->right);
-
-        if(n->left)
-            q.push(n->left);
-    }
+    st.push(root);
 
     while(!st.empty())
     {
         Node *n = st.top();
         cout << n->data << " ";
+
         st.pop();
+
+        if(n->right)
+            st.push(n->right);
+        if(n->left)
+            st.push(n->left);
     }
 }
 
@@ -110,6 +98,6 @@ int main()
     }    
     inOrder(root);
     cout << endl;
-    reverseLevelOrder(root);
+    preOrderIter(root);
     return 0;
 }
