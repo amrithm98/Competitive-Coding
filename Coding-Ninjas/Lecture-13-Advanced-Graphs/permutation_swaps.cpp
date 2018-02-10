@@ -1,79 +1,108 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void DFS(int **graph,bool *visited,int n,unordered_set<int>* comp,int start)
+vector<int> graph[100001];
+vector<vector<int>> components;
+
+void DFS(int n, vector<int> &comp,int start,bool *visited)
 {
     visited[start] = true;
-    comp->insert(start);
-    for(int i = 0; i < n; i++)
+    comp.push_back(start);
+
+    for(int i = 0; i < graph[start].size(); i++)
     {
-        if(!visited[i] && graph[start][i] != 0)
+        int v = graph[start][i];
+        if(!visited[v])
         {
-            DFS(graph,visited,n,comp,i);
+            DFS(n,comp,v,visited);
         }
     }
 }
 
-unordered_set<unordered_set<int>*>* getComponents(int **graph,int n)
+void getComponents(int n)
 {
     bool *visited = new bool[n];
 
-    unordered_set<unordered_set<int>*>* output = new unordered_set<unordered_set<int>*>();
+    for(int i = 0; i < n; i++)
+        visited[i] = false;
+    
     for(int i = 0; i < n; i++)
     {
         if(!visited[i])
         {
-            unordered_set<int> *comp = new unordered_set<int>();
-            DFS(graph,visited,n,comp,i);
-            output->insert(comp);
+            vector<int> comp;
+            DFS(n,comp,i,visited);
+            components.push_back(comp);
         }
     }
-    return output;
 }
 
-bool checkPermutation(int *p,int *q,unordered_set<unordered_set<int>*>* components,int n)
+bool checkPermutation(int n,int *p,int *q)
 {
-    unordered_set<unordered_set<int>*>::iterator mainIt = components->begin();
-    while(mainIt != components->end())
+    bool flag = false;
+
+    for(int i = 0; i < components.size(); i++)
     {
-        unordered_set<int> *comp = *mainIt;
-        unordered_set<int>::iterator it = comp->begin();
-        unordered_set<int> elems1,elems2;
-        // cout << endl;
-        while(it != comp->end())
+        unordered_set<int> p_set;
+        unordered_set<int> q_set;
+        for(int j = 0; j < components[i].size(); j++)
         {
-            elems1.insert(p[*it]);
-            elems2.insert(q[*it]);
-            // cout << *it << " ";
-            it++;
+            int index = components[i][j];
+            p_set.insert(p[index]);
+            q_set.insert(q[index]);
         }
-        // cout << endl;
-        bool flag = true;
-        for(auto elemIt : elems1)
+
+        for(auto it: p_set)
         {
-            if(elems2.find(elemIt) == elems2.end())
+            if(q_set.find(it) == q_set.end())
             {
-                flag = false;
-                return false;
+                flag = true;
+                break;
             }
         }
-        for(auto elemIt : elems2)
+
+        for(auto it:q_set)
         {
-            if(elems1.find(elemIt) == elems1.end())
+            if(p_set.find(it) == p_set.end())
             {
-                flag = false;
-                return false;
+                flag = true;
+                break;
             }
         }
-        mainIt++;
-    }   
-    return true;
+    }
+
+    return !flag;
+}
+
+void printComp(int n)
+{
+    cout << endl;
+    for(int i = 0; i < n; i++)
+    {
+        cout << i << ": ";
+        for(int j = 0; j < graph[i].size(); j++)
+        {
+            cout << graph[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    cout << endl;
+    for(int i = 0; i < components.size(); i++)
+    {
+        for(int j = 0; j < components[i].size(); j++)
+        {
+            cout << components[i][j] << " ";
+        }
+        cout << endl;
+    }
 }
 
 int main()
 {
     int t;
     cin >> t;
+
     while(t--)
     {
         int n,m;
@@ -82,41 +111,38 @@ int main()
         int *p = new int[n];
         int *q = new int[n];
 
-        for(int i = 0 ; i < n; i++)
-            cin >> p[i];
-        
-        for(int i = 0 ; i < n; i++)
-            cin >> q[i];
+        for(int i = 0; i < n; i++)
+        {
+            graph[i].clear();
+        }
 
-        int **graph = new int*[n];
+        components.clear();
 
         for(int i = 0; i < n; i++)
         {
-            graph[i] = new int[n];
-            for(int j = 0; j < n; j++)
-                graph[i][j] = 0;
+            cin >> p[i];
+        }
+
+        for(int i = 0; i < n; i++)
+        {
+            cin >> q[i];
         }
 
         for(int i = 0; i < m; i++)
         {
             int a,b;
             cin >> a >> b;
-            graph[a-1][b-1] = 1;
-            graph[b-1][a-1] = 1;
+            graph[a-1].push_back(b-1);
+            graph[b-1].push_back(a-1);
         }
 
-        unordered_set<unordered_set<int>*>* components = getComponents(graph,n);
-        bool sol = checkPermutation(p,q,components,n);
-
-        if(sol)
-        {
-            cout << "YES" << endl;
-        }
+        getComponents(n);
+        // printComp(n);
+        bool ans = checkPermutation(n,p,q);
+        if(ans)
+            cout << "YES\n";
         else
-        {
-            cout << "NO" <<endl;
-        }
+            cout << "NO\n";
     }
-
     return 0;
 }

@@ -72,6 +72,7 @@ void inOrderStack(Node *head)
             {
                 comp = true;
             }
+            
         }
     }
 }
