@@ -86,21 +86,36 @@ void printSCC()
     }
 }
 
-void getCapitals()
+void getBottomOfGraph()
 {
+    set<int> bottom;
+
     for(int i = 0; i < components.size(); i++)
     {
-        int v = *(components[i].begin());
-        cout << v+1 << " " << graphT[v].size() << endl;
-        if(graphT[v].size() == components.size() - 1)
+        bool flag = true;
+
+        for(auto it : components[i])
         {
-            cout << components[i].size();
-            for(auto it : components[i])
+            for(int j = 0; j < graph[it].size(); j++)
             {
-                cout << it+1 << " ";
+                if(components[i].find(graph[it][j]) == components[i].end())
+                {
+                    flag = false;
+                    break;
+                }
             }
+            if(!flag)
+                break;
+        }
+
+        if(flag)
+        {
+            for(auto it: components[i])
+                bottom.insert(it);
         }
     }
+    for(auto it : bottom)
+        cout << it+1 << " ";
     cout << endl;
 }
 
@@ -108,24 +123,32 @@ int main()
 {
 
     int n,m;
-    cin >> n >> m;
+    cin >> n;
 
-    for(int i = 0; i < n; i++)
+    while(n != 0)
     {
-        graph[i].clear();
-        graphT[i].clear();
+        cin >> m;
+        for(int i = 0; i < n; i++)
+        {
+            graph[i].clear();
+            graphT[i].clear();
+        }
+        components.clear();
+
+        for(int i = 0; i < m; i++)
+        {
+            int a,b;
+            cin >> a >> b;
+            graph[a-1].push_back(b-1);
+            graphT[b-1].push_back(a-1);
+        }
+
+        getSCC(n);
+        // printSCC();
+        getBottomOfGraph();
+        cin >> n;
     }
 
-    for(int i = 0; i < m; i++)
-    {
-        int a,b;
-        cin >> a >> b;
-        graph[a-1].push_back(b-1);
-        graphT[b-1].push_back(a-1);
-    }
-
-    getSCC(n);
-    // printSCC();
-    getCapitals();
+    
     return 0;
 }
