@@ -3,7 +3,7 @@ using namespace std;
 
 vector<pair<int,int>> graph[100001],graphRev[100001];
 
-int findMinVertex(int n,bool *visited,vector<int> &distance)
+int findMinVertex(int n,bool *visited,vector<long long int> &distance)
 {
     int minVertex = -1;
 
@@ -15,7 +15,7 @@ int findMinVertex(int n,bool *visited,vector<int> &distance)
     return minVertex;
 }
 
-void dijkstra(int start,vector<int> &distance,int flag,int n)
+void dijkstra(int start,vector<long long int> &distance,int flag,int n)
 {
     bool *visited = new bool[n];
 
@@ -70,7 +70,10 @@ int main()
     cin >> n >> m >> s >> t;
     
     for(int i = 0; i < n; i++)
+    {
         graph[i].clear();
+        graphRev[i].clear();
+    }
     
     for(int i = 0; i < m; i++)
     {
@@ -80,18 +83,39 @@ int main()
         graphRev[b-1].push_back(make_pair(a-1,c));
     }
 
-    vector<int> d1(n),d2(n),d3(n),d4(n);
+    vector<long long int> d1(n),d2(n),d3(n),d4(n);
 
     dijkstra(s-1,d1,0,n);
     dijkstra(t-1,d2,1,n);
     dijkstra(s-1,d3,1,n);
     dijkstra(t-1,d4,0,n);
 
+    // for(int i = 0; i < n; i++)
+    // {
+    //     cout << d1[i] << " "  << d2[i] << " " << d3[i] << " " << d4[i] << endl;
+    // }
+    int v = -1;
+    long long int dist = 1000000000;
+
     for(int i = 0; i < n; i++)
     {
-        cout << d1[i] << " "  << d2[i] << " " << d3[i] << " " << d4[i] << endl;
+        if(i == s-1 || i == t-1)
+        {
+            continue;
+        }
+        if(d1[i] + d2[i] + d4[i] + d3[i] < dist)
+        {
+            dist = d1[i] + d2[i] + d4[i] + d3[i];
+            v = i;
+            // cout << endl << dist << " " << v;
+        }
     }
-
+    if(v != -1)
+        cout << dist << endl;
+    else
+    {
+        cout << -1 << endl;
+    }
     
 
 	return 0;
