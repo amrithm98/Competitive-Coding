@@ -1,68 +1,83 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+typedef pair<int,int> iPair;
+
 vector<pair<int,int>> graph[100001],graphRev[100001];
 
-int findMinVertex(int n,bool *visited,vector<long long int> &distance)
-{
-    int minVertex = -1;
-
-    for(int i = 0; i < n; i++)
-    {
-        if(!visited[i] && (minVertex == -1 || distance[i] < distance[minVertex]))
-            minVertex = i;
-    }
-    return minVertex;
-}
-
-void dijkstra(int start,vector<long long int> &distance,int flag,int n)
+void dijkstra_pq_graph(int start,vector<long long int> &distance, int n)
 {
     bool *visited = new bool[n];
 
     for(int i = 0; i < n; i++)
     {
-        distance[i] = INT_MAX;
         visited[i] = false;
+        distance[i] = INT_MAX;
     }
+
+    priority_queue< iPair, vector<iPair> , greater<iPair> > pq;
+    pq.push(make_pair(0,start));
 
     distance[start] = 0;
-
-    if(flag == 0)
+    while(!pq.empty())
     {
-        for(int i = 0; i < n; i++)
+        pair<int,int> minVertex = pq.top();
+        pq.pop();
+
+        visited[minVertex.second] = true;
+
+        int vertex = minVertex.second;
+
+        for(int i = 0; i < graph[vertex].size(); i++)
         {
-            int minVertex = findMinVertex(n,visited,distance);
-            visited[minVertex] = true;
-            for(int j = 0; j < graph[minVertex].size(); j++)
+            int adj = graph[vertex][i].first;
+            int weight = graph[vertex][i].second;
+            if(!visited[adj] && distance[adj] > distance[vertex] + weight)
             {
-                pair<int,int> node = graph[minVertex][j];
-                if(!visited[node.first] && node.second + distance[minVertex] < distance[node.first] )
-                {
-                    distance[node.first] = node.second + distance[minVertex];
-                }
+                distance[adj] = distance[vertex] + weight;
+                pq.push(make_pair(distance[adj],adj));
             }
-
-        }
-    }
-    else
-    {
-        for(int i = 0; i < n; i++)
-        {
-            int minVertex = findMinVertex(n,visited,distance);
-            visited[minVertex] = true;
-
-            for(int j = 0; j < graphRev[minVertex].size(); j++)
-            {
-                pair<int,int> node = graphRev[minVertex][j];
-                if(!visited[node.first] && node.second + distance[minVertex] < distance[node.first] )
-                {
-                    distance[node.first] = node.second + distance[minVertex];
-                }
-            }
-
         }
     }
 }
+
+void dijkstra_pq_graphRev(int start,vector<long long int> &distance, int n)
+{
+    bool *visited = new bool[n];
+
+    for(int i = 0; i < n; i++)
+    {
+        visited[i] = false;
+        distance[i] = INT_MAX;
+    }
+
+    priority_queue< iPair, vector<iPair> , greater<iPair> > pq;
+    pq.push(make_pair(0,start));
+
+    distance[start] = 0;
+    while(!pq.empty())
+    {
+        pair<int,int> minVertex = pq.top();
+        pq.pop();
+
+        visited[minVertex.second] = true;
+
+        int vertex = minVertex.second;
+
+        for(int i = 0; i < graphRev[vertex].size(); i++)
+        {
+            int adj = graphRev[vertex][i].first;
+            int weight = graphRev[vertex][i].second;
+            if(!visited[adj] && distance[adj] > distance[vertex] + weight)
+            {
+                distance[adj] = distance[vertex] + weight;
+                pq.push(make_pair(distance[adj],adj));
+            }
+        }
+    }
+}
+
+
 
 int main()
 {
@@ -85,10 +100,11 @@ int main()
 
     vector<long long int> d1(n),d2(n),d3(n),d4(n);
 
-    dijkstra(s-1,d1,0,n);
-    dijkstra(t-1,d2,1,n);
-    dijkstra(s-1,d3,1,n);
-    dijkstra(t-1,d4,0,n);
+    dijkstra_pq_graph(s-1,d1,n);
+    dijkstra_pq_graphRev(t-1,d2,n);
+    dijkstra_pq_graphRev(s-1,d3,n);
+    dijkstra_pq_graph(t-1,d4,n);
+
 
     // for(int i = 0; i < n; i++)
     // {
