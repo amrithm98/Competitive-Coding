@@ -4,6 +4,7 @@ using namespace std;
 vector<int> graph[100001];
 vector<int> graphT[100001];
 vector<set<int>> components;
+map<int,int> componentMap;
 
 void DFS(int start,stack<int> &finishedStack, bool *visited)
 {
@@ -86,22 +87,65 @@ void printSCC()
     }
 }
 
-void getCapitals()
+void getCapitals(int n)
 {
-    for(int i = 0; i < components.size(); i++)
+    int num = components.size(); 
+    int *inDegree = new int[num];
+
+    for(int i = 0; i < num; i++)
     {
-        int v = *(components[i].begin());
-        cout << v+1 << " " << graphT[v].size() << endl;
-        if(graphT[v].size() == components.size() - 1)
+        inDegree[i] = 0;
+
+        for(auto it : components[i])
         {
-            cout << components[i].size();
-            for(auto it : components[i])
+            componentMap[it] = i;
+        }
+    }
+    
+    // for(auto it : componentMap)
+    //     cout << it.first + 1<< " " << it.second << endl;
+
+    for(int i = 0; i < n; i++)
+    {
+        for(auto it : graphT[i])
+        {
+            if(componentMap[i] != componentMap[it])
             {
-                cout << it+1 << " ";
+                inDegree[componentMap[it]]++;
             }
         }
     }
-    cout << endl;
+    // cout << endl;
+
+    // for(int i = 0; i < num ; i++)
+    //     cout << inDegree[i] << " ";
+
+    // cout << endl;
+
+    int index = -1;
+  	int i;
+    for( i = 0; i < num; i++)
+    {
+        if(inDegree[i] == 0 && index == -1)
+        {
+            index = i;
+        }
+        else if(inDegree[i] == 0 && index != -1)
+        {
+          	index = -1;
+            break;
+        }
+    }
+
+    if(index == -1)
+        cout << 0 << endl;
+    else
+    {
+        cout << components[index].size() << endl;
+
+        for(auto it : components[index])
+            cout << it + 1<< " ";
+    }
 }
 
 int main()
@@ -126,6 +170,6 @@ int main()
 
     getSCC(n);
     // printSCC();
-    getCapitals();
+    getCapitals(n);
     return 0;
 }
