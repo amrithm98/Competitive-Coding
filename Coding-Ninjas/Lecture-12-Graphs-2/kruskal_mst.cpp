@@ -48,6 +48,7 @@ int main()
       cin >> a >> b >> c;
       edges[i] = {a,b,c};
   }
+  
   sort(edges,edges+E,compare);
 
   int count = 0;

@@ -78,8 +78,8 @@ int main()
   {
       int a,b,c;
       cin >> a >> b >> c;
-      graph[a][b] = c;
-      graph[b][a] = c;
+      graph[a-1][b-1] = c;
+      graph[b-1][a-1] = c;
   }
 
   primsMST(graph,V,E);
