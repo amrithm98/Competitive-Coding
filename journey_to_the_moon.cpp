@@ -26,40 +26,32 @@ using namespace std; // }}}
 
 vector<long long> components;
 long long ind;
+vector<int> *graph;
 
-void DFS(int **input,int n,int sv,bool *visited)
+void DFS(int n,int sv,bool *visited)
 {
     ind++;
     visited[sv] = true;
 
-    for(int i = 0; i < n; i++)
+    for(int i = 0; i < graph[sv].size(); i++)
     {
-        if(i == sv)
-        {
-            continue;
-        }
-        if(input[sv][i] == 1)
-        {
-            if(visited[i])
-                continue;
-            else
-                DFS(input,n,i,visited);
-        }
+        int elem = graph[sv][i];
+        if(!visited[elem])
+            DFS(n,elem,visited);
     }
 }
 
-void dfs_disc(int **input,int n)
+void dfs_disc(int n)
 {
     bool *visited = new bool[n];
     memset(visited,0,sizeof(visited));
 
-    for(int i = 0; i < n ; i++)
+    for(int i = 0; i < n; i++)
     {
         ind = 0;
         if(!visited[i])
         {
-            DFS(input,n,i,visited);
-
+            DFS(n,i,visited);
             if(ind != 0)
                 components.push_back(ind);
         }
@@ -71,18 +63,18 @@ int main()
     int N, I;
     cin >> N >> I;
 
-    int **graph = new int*[N];
+    graph = new vector<int>[N];
     for(int i = 0; i < N; i++)
-        graph[i] = new int[N];
+        graph[i].clear();
     
     for (int i = 0; i < I; ++i) {
         int a, b;
         cin >> a >> b;
-        graph[a][b] = 1;
-        graph[b][a] = 1;
+        graph[a].push_back(b);
+        graph[b].push_back(a);
     }
  
-    dfs_disc(graph,N);
+    dfs_disc(N);
     
     long long res = 0;
     long long sum = 0;

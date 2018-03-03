@@ -7,7 +7,6 @@ void lisOptim(int *arr, int n)
     vector<int> tail;
     tail.push_back(arr[0]);
 
-
     for(int i = 1; i < n; i++)
     {
         int val = arr[i];

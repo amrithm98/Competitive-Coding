@@ -1,7 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void BFS(int **graph,int start,bool *visited,int *level)
+vector<int> *graph;
+
+void BFS(int start,bool *visited,int *level)
 {
     queue<int> q;
     q.push(start);
@@ -10,14 +12,15 @@ void BFS(int **graph,int start,bool *visited,int *level)
         int v = q.front();
         q.pop();
         visited[v] = 1;
-        cout << v << " ";
-        for(int i = 0; i < 100; i++)
+        // cout << v << " ";
+        for(int i = 0; i < graph[v].size(); i++)
         {
-            if(!visited[i] && graph[v][i])
+            int adj = graph[v][i];
+            if(!visited[adj])
             {
-                visited[i] = true;
-                q.push(i);
-                level[i] = level[v] + 1;
+                visited[adj] = true;
+                q.push(adj);
+                level[adj] = (level[v] + 1);
             }
         }
     }
@@ -33,19 +36,17 @@ int main()
         int n,m;
         cin >> n;
 
-        int **graph = new int*[100];
+        graph = new vector<int>[100];
         for(int i = 0; i < 100; i++)
         {
-            graph[i] = new int[100];
-            for(int j = 0; j < 100; j++)
-                graph[i][j] = 0;
+            graph[i].clear();
         }
         
         for(int i = 0; i < 100; i++)
         {
             for(int j = 1; j <= 6 && i+j <= 99; j++)
             {
-                graph[i][i+j] = 1;
+                graph[i].push_back(i+j);
             }
         }
 
@@ -55,10 +56,21 @@ int main()
             cin >> a >> b;
             a--;
             b--;
-            for(int j = 0; j < 100; j++)
-                graph[a][j] = 0;
-
-            graph[a][b] = 1;
+            graph[a].clear();
+            for(int j = a-6; j < a; j++)
+            {
+                int a_pos = -1;
+                for(int k = 0; k < graph[j].size() && j >= 0; k++)
+                {
+                    if(graph[j][k] == a)
+                    {
+                        a_pos = k;
+                        break;
+                    }
+                }
+                if(a_pos >= 0 && a_pos < graph[j].size())
+                    graph[j][a_pos] = b;
+            }
         }
 
         cin >> m;
@@ -69,15 +81,27 @@ int main()
             cin >> a >> b;
             a--;
             b--;
-            for(int j = 0; j < 100; j++)
-                graph[a][j] = 0;
-            graph[a][b] = 1;
+            graph[a].clear();
+            for(int j = a-6; j < a; j++)
+            {
+                int a_pos = -1;
+                for(int k = 0; k < graph[j].size() && j >= 0; k++)
+                {
+                    if(graph[j][k] == a)
+                    {
+                        a_pos = k;
+                        break;
+                    }
+                }
+                if(a_pos >= 0 && a_pos < graph[j].size())
+                    graph[j][a_pos] = b;
+            }
         }
 
-        // for(int i = 98; i < 100; i++)
+        // for(int i = 0; i < 100; i++)
         // {
         //     cout << i << " ";
-        //     for(int j = 60; j < 100; j++)
+        //     for(int j = 0; j < graph[i].size(); j++)
         //         cout << graph[i][j] << " ";
         //     cout << endl;
         // }
@@ -91,8 +115,11 @@ int main()
             level[i] = 0;
         }
 
-        BFS(graph,0,visited,level);
-        cout << level[99] - 1 << endl;
+        BFS(0,visited,level);
+        if(level[99] == 0)
+            cout << -1 << endl;
+        else
+            cout << level[99]<< endl;
     }
 
     return 0;
