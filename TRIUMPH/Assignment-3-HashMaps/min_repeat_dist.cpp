@@ -4,6 +4,8 @@ using namespace std;
 int minDistance(int arr[],int n)
 {
     unordered_map<int,int> freqMap;
+    int min_rep = INT_MAX;
+
     for(int i = 0; i < n; i++)
     {
         if(freqMap[arr[i]] == 0)
@@ -12,9 +14,14 @@ int minDistance(int arr[],int n)
         }
         else
         {
-            return (i - freqMap[arr[i]] + 1);
+            min_rep = min(min_rep,(i - freqMap[arr[i]] + 1) );
+            freqMap[arr[i]] = i+1;
         }
     }
+
+    if(min_rep == INT_MAX)
+      	return -1;
+  	else return min_rep;
 }
 
 int main()
