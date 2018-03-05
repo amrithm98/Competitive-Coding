@@ -21,7 +21,7 @@ int knapsack_optim(int *weights,int *values,int n,int maxWeight)
             dp[k][w] = dp[!k][w];
             w++;
         }
-        while(w<= maxWeight){
+        while(w <= maxWeight){
             dp[k][w] = max(dp[!k][w],values[i-1] + dp[!k][w-weights[i-1]]);
             w++;
         }
