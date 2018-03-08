@@ -18,6 +18,7 @@ int matrixChain(int *p,int start, int end,int **dp)
     {
         return 0;
     }
+    
     if(dp[start][end] > -1)
     {
         return dp[start][end];

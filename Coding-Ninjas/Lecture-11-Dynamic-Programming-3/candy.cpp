@@ -50,5 +50,4 @@ int main()
 
     cout << solve(like,n) << endl;
     return 0;
-
 }
