@@ -11,6 +11,7 @@ bool checkPossible(int board[][9],int row,int col,int val)
         if(board[i][col]==val)
             return false;
     }
+
     int row_start=(row/3)*3;
     int col_start=(col/3)*3;
 
@@ -25,6 +26,7 @@ bool checkPossible(int board[][9],int row,int col,int val)
                 return false;
         }
     }
+    
     return true;
 }
 
@@ -49,6 +51,7 @@ void printBoard(int board[][9])
         cout<<endl;
     }
 }
+
 bool sudokuSolver(int board[][9]){
 
   /* Don't write main().
