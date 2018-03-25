@@ -11,36 +11,30 @@ int main()
         string s;
         cin >> s;
 
-        stack<int> ops;
         int count = 0;
 
-        if(s[0] == '>')
-        {
-            cout << 0 << endl;
-            continue;
-        }
+        int max_corr = 0;
 
-        int i = 0;
-        while( i < s.size())
+        for(int i = 0; i < s.size(); i++)
         {
             if(s[i] == '<')
-                ops.push(i);
-
-            else
             {
-                if(!ops.empty() && s[ops.top()] == '<')
-                {
-                    ops.pop();
-                    count++;
-                }
-                else
-                {
-                    break;
-                }
+                count++;
             }
-            i++;
+            else if(s[i] == '>')
+            {
+                count--;
+            }
+            if(count == 0)
+            {
+                max_corr = i;
+            }
+            else if(count < 0)
+            {
+                break;
+            }
         }
-       cout << (ops.empty()?0:ops.top()) << endl;
+        cout << ((max_corr == 0)?0:max_corr+1) << endl;
     }
     return 0;
 }

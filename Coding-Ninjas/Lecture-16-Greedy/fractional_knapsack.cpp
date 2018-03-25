@@ -26,6 +26,8 @@ int main()
         cin >> items[i].weight >> items[i].value;
     }
 
+    sort(items,items+n,compare);
+
     double maxVal = 0;
     int currWeight = 0;
 
