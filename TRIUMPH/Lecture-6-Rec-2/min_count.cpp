@@ -12,12 +12,14 @@ int minCount(int n){
     {
       	return INT_MAX;
     }
+
   	if(n == 0)
     {
       	return 0;
     }
   
   	int m_c = INT_MAX;
+      
   	for(int i = 1; i*i <= n; i++)
     {
       	m_c = min(m_c,1 + minCount(n - i*i));

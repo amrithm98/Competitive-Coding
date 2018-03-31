@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template<T>
+template<typename T>
 class Tree<T>
-{
+{   
     
 }
 
