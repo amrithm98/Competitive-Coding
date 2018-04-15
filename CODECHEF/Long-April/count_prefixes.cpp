@@ -48,7 +48,7 @@ int main()
 
         long long int sum = 0;
         long long int cd = pos[s.size()-1];
-        
+
         for(int i = 0; i < s.size(); i++)
         {
             if(pos[i] <= 0 && cd <= 0)
@@ -67,7 +67,8 @@ int main()
                 {
                     x++;
                 }
-                sum += (n-x);
+                if(x < n)
+                    sum += (n-x);
             }
             else
             {
