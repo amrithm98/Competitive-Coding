@@ -61,6 +61,7 @@
         "unordered_map": "cpp",
         "map": "cpp",
         "stdio.h": "c",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "__locale": "cpp"
     }
 }
