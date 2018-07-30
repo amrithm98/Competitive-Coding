@@ -36,7 +36,7 @@ void dfs(TrieNode* root, string s, map<char,string> &huffman)
 {
     if(root == NULL)
         return ;
-        
+
     if(root->left == NULL && root->right == NULL)
     {
         huffman[root->data] = s;
@@ -45,6 +45,37 @@ void dfs(TrieNode* root, string s, map<char,string> &huffman)
 
     dfs(root->left,s + "0",huffman);
     dfs(root->right,s + "1",huffman);
+}
+
+string decodeHuffman(string s, TrieNode* root)
+{
+    TrieNode* temp = root;
+    int n = s.size();
+    int i = 0;
+
+    string res = "";
+
+    while(i < n)
+    {
+        if(s[i] == '0')
+        {
+            temp = temp->left;
+        }
+        else if(s[i] == '1')
+        {
+            temp = temp->right;
+        }
+
+        if(temp->left == NULL && temp->right == NULL)
+        {
+            res += temp->data;
+            temp = root;
+        }
+
+        i++;
+    }
+
+    return res;
 }
 
 int main()
@@ -94,6 +125,12 @@ int main()
         cout << it.first << " " << it.second << endl;
     }
 
+    string str;
+    cout << "\nEnter A String to Decode : ";
+    cin >> str;
+
+    cout << "\nThe decoding is : " << decodeHuffman(str,root) << endl;
+
     return 0;
 }
 
@@ -114,5 +151,9 @@ c 100
 d 101
 e 111
 f 0
+
+Enter A String to Decode : 11001001000111
+
+The decoding is : accfe
 
 ****/
