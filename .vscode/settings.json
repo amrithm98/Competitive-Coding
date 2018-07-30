@@ -62,6 +62,14 @@
         "map": "cpp",
         "stdio.h": "c",
         "*.ipp": "cpp",
-        "__locale": "cpp"
+        "__locale": "cpp",
+        "__string": "cpp",
+        "regex": "cpp",
+        "string": "cpp",
+        "queue": "cpp",
+        "__functional_base": "cpp",
+        "iterator": "cpp",
+        "stack": "cpp",
+        "ios": "cpp"
     }
 }

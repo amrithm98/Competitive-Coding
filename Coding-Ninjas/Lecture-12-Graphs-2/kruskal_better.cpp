@@ -57,6 +57,7 @@ void KruskalsMST(Edge *graph, DisjSet *ds, int n, int m)
     {
         if(!isUnion(ds,graph[i].start,graph[i].end))
         {
+          	Union(ds,graph[i].start,graph[i].end);
             MST.push_back(graph[i]);
             j++;
         }
@@ -64,7 +65,11 @@ void KruskalsMST(Edge *graph, DisjSet *ds, int n, int m)
 
     for(auto it : MST)
     {
-        cout << it.start << " " << it.end << " " << it.weight << endl;
+      	if(it.start <= it.end)
+        	cout << it.start << " " << it.end << " " << it.weight << endl;
+      	else
+          	cout << it.end << " " << it.start << " " << it.weight << endl;
+
     }
 }
 
