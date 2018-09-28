@@ -70,6 +70,7 @@
         "__functional_base": "cpp",
         "iterator": "cpp",
         "stack": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "random": "cpp"
     }
 }

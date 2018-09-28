@@ -35,6 +35,7 @@ class PriorityQueue {
     {
         int parent = (index-1)/2;
         int largest = index;
+        
         if(parent >= 0 && pq[parent] < pq[index])
         {   
             largest = parent;

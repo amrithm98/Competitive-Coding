@@ -1,5 +1,8 @@
 // Following is the Binary Tree node structure
-/**************
+#include<bits/stdc++.h>
+using namespace std;
+
+template <typename T>
 class BinaryTreeNode {
     public : 
     T data;
@@ -12,7 +15,6 @@ class BinaryTreeNode {
         right = NULL;
     }
 };
-***************/
 
 
 BinaryTreeNode<int>* completeTree(BinaryTreeNode<int>* root,int *input, int si,int ei)
